@@ -8,10 +8,16 @@ function App() {
   const [loading, setLoading] = useState(true)
   const [gameState, setGameState] = useState(-1)
   const [correctAnswers, setCorrectAnswers] = useState(0)
+  const [token, setToken] = useState()
 
   useEffect(() => {
-    dataFetch()
+    tokenFetch()
   }, [])
+
+  useEffect(()=>{
+    if(token)
+      dataFetch()
+  }, [token])
 
   useEffect(() => {
     if (questionData?.length > 0) {
@@ -20,9 +26,20 @@ function App() {
     }
   }, [questionData])
 
+  async function tokenFetch(){
+    try{
+      const rss = await fetch('https://opentdb.com/api_token.php?command=request')
+      const data = await rss.json()
+      setToken(data.token)
+    }
+    catch(error){
+      console.log(error)
+    }
+  }
+
   async function dataFetch() {
     try {
-      const rss = await fetch("https://opentdb.com/api.php?amount=5&type=multiple")
+      const rss = await fetch(`https://opentdb.com/api.php?amount=5&type=multiple&token=${token}`)
       const data = await rss.json()
       setQuestionData(data.results)
     } catch (error) {
