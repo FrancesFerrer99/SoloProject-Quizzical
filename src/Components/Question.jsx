@@ -19,7 +19,9 @@ export default function Question({question, answers, answerIndex, gameState, upd
 
         return(
             <button onClick={()=> {
-                setSelected(index)
+                if(selected == index)
+                    setSelected(null)
+                else setSelected(index)
                 updateAnswersArray(position, index)
             }} key={index} className={`${classOption}`} disabled={disable}>
                 {text}
