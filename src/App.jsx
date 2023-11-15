@@ -102,7 +102,7 @@ function App() {
   })
 
   return (
-    <>
+    <div className='site-wrapper'>
       {
         gameState == -1 ? <button className='submit-button' onClick={() => setGameState(0)}>Start the game</button> :
           !loading ?
@@ -122,7 +122,7 @@ function App() {
             :
             <h1>Loading...</h1>
       }
-    </>
+    </div>
   )
 }
 
